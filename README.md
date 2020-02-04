@@ -17,3 +17,4 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
   * Set "Project Individual Elements" in snapping
   * Set the Viewport shading to solid
   * Set the window shading color type to object
+  * Turns on Backface culling
