@@ -1,5 +1,13 @@
 import bpy
-
+bl_info = {
+    "name": "Setup Retopo From New Plane",
+    "description": "Do several steps to setup retopology",
+    "author": "Johnny Matthews",
+    "version": (1, 0),
+    "blender": (2, 81, 0),
+    "support": "COMMUNITY",
+    "category": "Object"
+}
 def main(context):
     bpy.ops.transform.rotate(value=1.5708, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
     bpy.ops.transform.translate(value=(1, 0, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
