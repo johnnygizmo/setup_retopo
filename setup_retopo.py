@@ -23,6 +23,7 @@ def main(context):
     bpy.context.scene.tool_settings.use_snap = True
     bpy.context.space_data.shading.type = 'SOLID'
     bpy.context.space_data.shading.color_type = 'OBJECT'
+    bpy.context.space_data.shading.show_backface_culling = True
 
 
 class JohnnyGizmoSetupRetopo(bpy.types.Operator):
