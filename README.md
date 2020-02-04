@@ -12,6 +12,7 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
   * Set clipping on for mirror modifier
   * Set Object to "Show in Front"
   * Set Object color to a randomish teal color
+  * Turn on Snapping
   * Set Snapping to Face
   * Set "Project Individual Elements" in snapping
   * Set the Viewport shading to solid
