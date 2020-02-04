@@ -18,3 +18,5 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
   * Set the Viewport shading to solid
   * Set the window shading color type to object
   * Turns on Backface culling
+
+After the add-on is run you can change the Y position of the new plane and the object color
