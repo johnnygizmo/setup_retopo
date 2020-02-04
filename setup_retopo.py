@@ -20,6 +20,7 @@ def main(context):
     bpy.context.object.color = (0.0945094, 0.283429, 0.240477, 1)
     bpy.context.scene.tool_settings.snap_elements = {'FACE'}
     bpy.context.scene.tool_settings.use_snap_project = True
+    bpy.context.scene.tool_settings.use_snap = True
     bpy.context.space_data.shading.type = 'SOLID'
     bpy.context.space_data.shading.color_type = 'OBJECT'
 
