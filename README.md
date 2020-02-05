@@ -23,6 +23,7 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
   * Set the window shading color type to object
   * Turns on Backface culling
   * Adds Automerge
+  * Sets the high-res mesh as non-selectable
 
 After the add-on is run you can 
   * change the Y position of the new plane 
