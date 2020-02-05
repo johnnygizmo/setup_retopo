@@ -3,7 +3,7 @@ bl_info = {
     "name": "Setup Retopo From New Plane",
     "description": "Do several steps to setup retopology",
     "author": "Johnny Matthews",
-    "version": (1, 0),
+    "version": (1, 1),
     "blender": (2, 81, 0),
     "support": "COMMUNITY",
     "category": "Object"
@@ -23,8 +23,9 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
     color: bpy.props.FloatVectorProperty(name="Color", description="Object Color", default=(0.0945094, 0.283429, 0.240477,1), options={'ANIMATABLE'}, size=4, subtype='COLOR')
    
     cage: bpy.props.BoolProperty(name="Shrink Cage", description="Enable Shrinkwap Cage", default=False)
-   
-   
+    add_mirror: bpy.props.BoolProperty(name="Add Mirror", description="Enable Mirror Modifier", default=True)
+    add_shrink: bpy.props.BoolProperty(name="Add Shrinwrap", description="Enable Shrinkwrap Modifier", default=True)
+
     @classmethod
     def poll(cls, context):
         return context.active_object is not None
@@ -51,21 +52,26 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         
         target.select_set(False)
         
-        bpy.ops.transform.resize(value=(self.scale, self.scale, self.scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        bpy.ops.transform.resize(value=(self.scale, self.scale, self.scale), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)    
         bpy.ops.transform.rotate(value=1.5708, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
-        bpy.ops.transform.translate(value=(1*self.scale, 0, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        
+        if self.add_mirror == True:
+            bpy.ops.transform.translate(value=(1*self.scale, 0, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        
         bpy.ops.transform.translate(value=(0, self.ypos, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         bpy.ops.object.origin_set(type='ORIGIN_CURSOR', center='MEDIAN')
         bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
 
         #modifiers        
-        bpy.ops.object.modifier_add(type='SHRINKWRAP')
-        bpy.context.object.modifiers["Shrinkwrap"].target = target
-        bpy.context.object.modifiers["Shrinkwrap"].show_on_cage = self.cage
         
-                
-        bpy.ops.object.modifier_add(type='MIRROR')
-        bpy.context.object.modifiers["Mirror"].use_clip = True
+        if self.add_shrink == True:
+            bpy.ops.object.modifier_add(type='SHRINKWRAP')
+            bpy.context.object.modifiers["Shrinkwrap"].target = target
+            bpy.context.object.modifiers["Shrinkwrap"].show_on_cage = self.cage
+        
+        if self.add_mirror == True:                
+            bpy.ops.object.modifier_add(type='MIRROR')
+            bpy.context.object.modifiers["Mirror"].use_clip = True
         
         #Object Settings
         bpy.context.object.show_in_front = True
