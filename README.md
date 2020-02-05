@@ -8,7 +8,7 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
 
   * Rotate the plane 90 degrees and move the plane out to a selectable Y distance
   * Selectable Add Shrinkwrap with inactive selected mesh as Target
-  * Selectable Set Show on cage View for Shrinkwrap
+    * Selectable Set Show on cage View for Shrinkwrap
   * Selectable Add Mirror modifier -with offset of plane (clipping on)
   * Set Object to "Show in Front"
   * Set Object color to selectable color
