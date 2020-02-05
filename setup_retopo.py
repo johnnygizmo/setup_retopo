@@ -9,7 +9,7 @@ bl_info = {
     "category": "Object"
 }
 
-
+    
 class JohnnyGizmoSetupRetopo(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "object.johnnygizmo_setup_retopo"
@@ -25,14 +25,39 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         return context.active_object is not None
 
     def execute(self, context):
+        
+        if len(context.selected_objects) != 2:
+            self.report({'INFO'}, "Please select Target and Retopo Geometry")
+            return {'FINISHED'}
+        
+        
+        for ob in context.selected_objects:
+            if ob.type != 'MESH':
+                self.report({'INFO'}, "Invlid Type, Select 2 Meshes")
+                return {'FINISHED'}
+        
+            
         #Move Plane
+        active = context.active_object
+        target = None
+        for ob in context.selected_objects:
+            if ob != active:
+                target = ob
+        
+        target.select_set(False)
+        
         bpy.ops.transform.rotate(value=1.5708, orient_axis='X', orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         bpy.ops.transform.translate(value=(1, 0, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         bpy.ops.transform.translate(value=(0, self.ypos, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         bpy.ops.object.origin_set(type='ORIGIN_CURSOR', center='MEDIAN')
         bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
+
+        #modifiers        
+        bpy.ops.object.modifier_add(type='SHRINKWRAP')
+        bpy.context.object.modifiers["Shrinkwrap"].target = target
         bpy.ops.object.modifier_add(type='MIRROR')
-        
+        bpy.context.object.modifiers["Mirror"].show_on_cage = True
+
         #Object Settings
         bpy.context.object.modifiers["Mirror"].use_clip = True
         bpy.context.object.show_in_front = True
@@ -42,11 +67,12 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         bpy.context.scene.tool_settings.snap_elements = {'FACE'}
         bpy.context.scene.tool_settings.use_snap_project = True
         bpy.context.scene.tool_settings.use_snap = True
-    
-        #Automerge
+        bpy.context.scene.tool_settings.use_snap_backface_culling = True
+
+        #automerge
         bpy.context.scene.tool_settings.use_mesh_automerge = True
         bpy.context.scene.tool_settings.double_threshold = self.merge
-
+              
     
         #Shading
         bpy.context.space_data.shading.type = 'SOLID'
