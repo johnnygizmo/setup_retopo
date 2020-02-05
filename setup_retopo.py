@@ -3,7 +3,7 @@ bl_info = {
     "name": "Setup Retopo From New Plane",
     "description": "Do several steps to setup retopology",
     "author": "Johnny Matthews",
-    "version": (1, 1),
+    "version": (1, 2),
     "blender": (2, 81, 0),
     "support": "COMMUNITY",
     "category": "Object"
