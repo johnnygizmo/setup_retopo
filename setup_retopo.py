@@ -88,6 +88,7 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         bpy.context.space_data.shading.show_backface_culling = True
         
         bpy.ops.object.editmode_toggle()
+        target.hide_select = True
 
         return {'FINISHED'}
 
