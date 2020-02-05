@@ -7,20 +7,16 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
 4) The following tasks are run
 
   * Rotate the plane 90 degrees and move the plane out to a selectable Y distance
-  * Reset origin to 3d cursor
-  * Apply transform
-  * Add Shrinkwrap
-  * Set High Poly Mesh as Retopo Target
-  * Selectable Set Show on cage View for Shrinkwrap
-  * Add Mirror modifier
-  * Set clipping on for mirror modifier
+  * Selectable Add Shrinkwrap with inactive selected mesh as Target
+    * Selectable Set Show on cage View for Shrinkwrap
+  * Selectable Add Mirror modifier -with offset of plane (clipping on)
   * Set Object to "Show in Front"
   * Set Object color to selectable color
   * Turn on Snapping
-  * Set Snapping to Face
-  * Set "Project Individual Elements" in snapping
+    * Set Snapping to Face
+    * Set "Project Individual Elements" in snapping
   * Set the Viewport shading to solid
-  * Set the window shading color type to object
-  * Turns on Backface culling
+    * Set the window shading color type to object
+    * Turns on Backface culling
   * Adds Automerge
   * Sets the high-res mesh as non-selectable
