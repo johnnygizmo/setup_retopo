@@ -16,7 +16,8 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
     bl_label = "Setup Retopo From New Plane"
     bl_options = {'REGISTER', 'UNDO'}
 
-    ypos: bpy.props.IntProperty(name="Y Position", default=-5, min=-100, max=100)
+    ypos: bpy.props.FloatProperty(name="Y Position", default=-5.0, min=-100.0, max=100.0)
+    merge: bpy.props.FloatProperty(name="Automerge Dist", default=0.001, min=0.0, max=0.1,precision=3, step=.1)
     color: bpy.props.FloatVectorProperty(name="Color", description="Object Color", default=(0.0945094, 0.283429, 0.240477,1), options={'ANIMATABLE'}, size=4, subtype='COLOR')
    
     @classmethod
@@ -41,6 +42,11 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         bpy.context.scene.tool_settings.snap_elements = {'FACE'}
         bpy.context.scene.tool_settings.use_snap_project = True
         bpy.context.scene.tool_settings.use_snap = True
+    
+        #Automerge
+        bpy.context.scene.tool_settings.use_mesh_automerge = True
+        bpy.context.scene.tool_settings.double_threshold = self.merge
+
     
         #Shading
         bpy.context.space_data.shading.type = 'SOLID'
