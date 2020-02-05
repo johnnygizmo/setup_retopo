@@ -2,20 +2,20 @@
 A Blender 2.8x script for getting a plane into a retopo setup quickly
 
 1) Add a plane
-2) Select High Poly Mesh, Select Retopo Plane as Active
-3) Search for the "Setup Retopo" operator
+2) Select High Poly Mesh, Select Retopo Plane as Active, High poly as non-active selection
+3) Search for the "Setup Retopo From New Plane" operator
 4) The following tasks are run
 
-  * Rotate the plane 90 degrees and move the plane out to (1,5,0)
+  * Rotate the plane 90 degrees and move the plane out to a selectable Y distance
   * Reset origin to 3d cursor
   * Apply transform
   * Add Shrinkwrap
   * Set High Poly Mesh as Retopo Target
-  * Set Show on cage View for Shrinkwrap
+  * Selectable Set Show on cage View for Shrinkwrap
   * Add Mirror modifier
   * Set clipping on for mirror modifier
   * Set Object to "Show in Front"
-  * Set Object color to a randomish teal color
+  * Set Object color to selectable color
   * Turn on Snapping
   * Set Snapping to Face
   * Set "Project Individual Elements" in snapping
@@ -24,8 +24,3 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
   * Turns on Backface culling
   * Adds Automerge
   * Sets the high-res mesh as non-selectable
-
-After the add-on is run you can 
-  * change the Y position of the new plane 
-  * change the object color
-  * set the automerge distance
