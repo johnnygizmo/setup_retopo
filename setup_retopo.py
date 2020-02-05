@@ -72,7 +72,8 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         if self.add_mirror == True:                
             bpy.ops.object.modifier_add(type='MIRROR')
             bpy.context.object.modifiers["Mirror"].use_clip = True
-        
+            if self.add_shrink == False:
+                bpy.context.object.modifiers["Mirror"].show_on_cage = self.cage      
         #Object Settings
         bpy.context.object.show_in_front = True
         bpy.context.object.color = self.color
