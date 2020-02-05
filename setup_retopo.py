@@ -31,21 +31,30 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         return context.active_object is not None
 
     def execute(self, context):
+        target = None
         
-        if len(context.selected_objects) != 2:
-            self.report({'INFO'}, "Please select Target and Retopo Geometry")
-            return {'FINISHED'}
+        if len(context.selected_objects) ==  1 and context.active_object.type == 'MESH':
+            target = context.active_object
+            bpy.ops.mesh.primitive_plane_add(size=2.0, calc_uvs=True, enter_editmode=False, align='WORLD', location=(0.0, 0.0, 0.0), rotation=(0.0, 0.0, 0.0))
+            target.select_set(True)
+            
+        else:
+            self.report({'INFO'}, "Please select Mesh Object for Retopo")    
+            return {'CANCELLED'}
+        #if len(context.selected_objects) > 2:
+        #    self.report({'INFO'}, "Please select Target and Retopo Geometry")
+        #    return {'FINISHED'}
         
         
-        for ob in context.selected_objects:
-            if ob.type != 'MESH':
-                self.report({'INFO'}, "Invlid Type, Select 2 Meshes")
-                return {'FINISHED'}
+        #for ob in context.selected_objects:
+        #    if ob.type != 'MESH':
+        #        self.report({'INFO'}, "Invlid Type, Select 2 Meshes")
+        #        return {'FINISHED'}
         
             
         #Move Plane
         active = context.active_object
-        target = None
+       
         for ob in context.selected_objects:
             if ob != active:
                 target = ob
