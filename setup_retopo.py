@@ -1,6 +1,6 @@
 import bpy
 bl_info = {
-    "name": "Setup Retopo From New Plane",
+    "name": "Setup Retopo",
     "description": "Do several steps to setup retopology",
     "author": "Johnny Matthews",
     "version": (1, 2),
