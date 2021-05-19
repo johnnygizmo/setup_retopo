@@ -13,7 +13,7 @@ bl_info = {
 class JohnnyGizmoSetupRetopo(bpy.types.Operator):
     """Tooltip"""
     bl_idname = "object.johnnygizmo_setup_retopo"
-    bl_label = "Setup Retopo From New Plane"
+    bl_label = "Setup Retopology"
     bl_options = {'REGISTER', 'UNDO'}
 
     ypos: bpy.props.FloatProperty(name="Y Position", default=-2.0, min=-100.0, max=100.0)
