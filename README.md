@@ -1,8 +1,8 @@
 # setup_retopo
-A Blender 2.8x script for getting a plane into a retopo setup quickly
+A Blender 3.3.x script for getting a plane into a retopo setup quickly
 
-1) Select Mesh to Retopolgize
-2) Search for the "Setup Retopo From New Plane" operator
+1) Select Mesh to Retopolgize (Make sure it is centered around the origin.
+2) Search for the "Setup Retopology" operator
 3) The following tasks are run
 
   * Retopo Geometry is Created and moved the plane out to a selectable Y distance
@@ -18,4 +18,5 @@ A Blender 2.8x script for getting a plane into a retopo setup quickly
     * Set the window shading color type to object
     * Turns on Backface culling
   * Adds Automerge
-  * Sets the high-res mesh as non-selectable
+
+4) Use the settings popup to change the settings (especially the plane scale) to your needs
