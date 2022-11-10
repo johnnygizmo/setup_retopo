@@ -1,10 +1,13 @@
 import bpy
+
+from bpy.props import EnumProperty, FloatProperty, IntProperty, PointerProperty
+
 bl_info = {
     "name": "Setup Retopology",
-    "description": "Do several steps to setup retopology",
+    "description": "Do several steps to setup a retopology session",
     "author": "Johnny Matthews",
     "version": (1, 2),
-    "blender": (2, 81, 0),
+    "blender": (3, 3, 1),
     "support": "COMMUNITY",
     "category": "Object"
 }
@@ -75,14 +78,16 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         
         if self.add_shrink == True:
             bpy.ops.object.modifier_add(type='SHRINKWRAP')
-            bpy.context.object.modifiers["Shrinkwrap"].target = target
-            bpy.context.object.modifiers["Shrinkwrap"].show_on_cage = self.cage
+            bpy.context.object.modifiers[-1].target = target
+            bpy.context.object.modifiers[-1].show_on_cage = self.cage
+            bpy.context.object.modifiers[-1].wrap_method = 'PROJECT'
+
         
         if self.add_mirror == True:                
             bpy.ops.object.modifier_add(type='MIRROR')
-            bpy.context.object.modifiers["Mirror"].use_clip = True
+            bpy.context.object.modifiers[-1].use_clip = True
             if self.add_shrink == False:
-                bpy.context.object.modifiers["Mirror"].show_on_cage = self.cage      
+                bpy.context.object.modifiers[-1].show_on_cage = self.cage      
         #Object Settings
         bpy.context.object.show_in_front = True
         bpy.context.object.color = self.color
@@ -104,7 +109,7 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         bpy.context.space_data.shading.show_backface_culling = True
         
         bpy.ops.object.editmode_toggle()
-        target.hide_select = True
+        #target.hide_select = True
 
         return {'FINISHED'}
 
