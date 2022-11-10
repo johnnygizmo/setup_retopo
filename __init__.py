@@ -80,7 +80,8 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
             bpy.ops.object.modifier_add(type='SHRINKWRAP')
             bpy.context.object.modifiers[-1].target = target
             bpy.context.object.modifiers[-1].show_on_cage = self.cage
-            bpy.context.object.modifiers[-1].wrap_method = 'PROJECT'
+            bpy.context.object.modifiers[-1].wrap_method = 'NEAREST_SURFACEPOINT'
+
 
         
         if self.add_mirror == True:                
