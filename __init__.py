@@ -1,12 +1,12 @@
 import bpy
 
-from bpy.props import EnumProperty, FloatProperty, IntProperty, PointerProperty
+from bpy.props import EnumProperty, FloatProperty, FloatVectorProperty, IntProperty, PointerProperty
 
 bl_info = {
     "name": "Setup Retopology",
     "description": "Do several steps to setup a retopology session",
     "author": "Johnny Matthews",
-    "version": (1, 3),
+    "version": (1, 4),
     "blender": (3, 3, 1),
     "support": "COMMUNITY",
     "category": "Object"
@@ -19,14 +19,17 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
     bl_label = "Setup Retopology"
     bl_options = {'REGISTER', 'UNDO'}
 
-    ypos: bpy.props.FloatProperty(name="Y Position", default=-2.0, min=-100.0, max=100.0)
+    pos: bpy.props.FloatVectorProperty(name="Offset", default=(0.0,-2.0,0.0))
+            
     scale: bpy.props.FloatProperty(name="Plane Size", default=0.1, min=.001, max=1.0, precision=2,step=1)
     
-    merge: bpy.props.FloatProperty(name="Automerge Dist", default=0.001, min=0.0, max=0.1,precision=3, step=.1)
+    
     color: bpy.props.FloatVectorProperty(name="Color", description="Object Color", default=(0.0945094, 0.283429, 0.240477,1), options={'ANIMATABLE'}, size=4, subtype='COLOR')
    
     add_mirror: bpy.props.BoolProperty(name="Add Mirror", description="Enable Mirror Modifier", default=True)
     add_shrink: bpy.props.BoolProperty(name="Add Shrinwrap", description="Enable Shrinkwrap Modifier", default=True)
+    automerge: bpy.props.BoolProperty(name="Enable Automerge", description="Enable Automerge Option", default=False)
+    merge: bpy.props.FloatProperty(name="Automerge Dist", default=0.001, min=0.0, max=0.1,precision=3, step=.1)
 
     @classmethod
     def poll(cls, context):
@@ -61,10 +64,11 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         if self.add_mirror == True:
             bpy.ops.transform.translate(value=(0.5*self.scale, 0, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(True, False, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         
-        bpy.ops.transform.translate(value=(0, self.ypos, 0), orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        bpy.ops.transform.translate(value=self.pos, orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
         #bpy.ops.object.origin_set(type='ORIGIN_CURSOR', center='MEDIAN')
         bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
-
+        bpy.ops.transform.translate(value=target.location, orient_type='GLOBAL', orient_matrix=((1, 0, 0), (0, 1, 0), (0, 0, 1)), orient_matrix_type='GLOBAL', constraint_axis=(False, True, False), mirror=True, use_proportional_edit=False, proportional_edit_falloff='SMOOTH', proportional_size=1, use_proportional_connected=False, use_proportional_projected=False)
+        
 
         #modifiers      
         if self.add_mirror == True:                
@@ -98,7 +102,7 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
         bpy.context.scene.tool_settings.use_snap_backface_culling = True
 
         #automerge
-        bpy.context.scene.tool_settings.use_mesh_automerge = True
+        bpy.context.scene.tool_settings.use_mesh_automerge = self.automerge
         bpy.context.scene.tool_settings.double_threshold = self.merge
               
     
