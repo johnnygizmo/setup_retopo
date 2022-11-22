@@ -27,7 +27,7 @@ class JohnnyGizmoSetupRetopo(bpy.types.Operator):
     color: bpy.props.FloatVectorProperty(name="Color", description="Object Color", default=(0.0945094, 0.283429, 0.240477,1), options={'ANIMATABLE'}, size=4, subtype='COLOR')
    
     add_mirror: bpy.props.BoolProperty(name="Add Mirror", description="Enable Mirror Modifier", default=True)
-    add_shrink: bpy.props.BoolProperty(name="Add Shrinwrap", description="Enable Shrinkwrap Modifier", default=True)
+    add_shrink: bpy.props.BoolProperty(name="Add Shrinwrap", description="Enable Shrinkwrap Modifier", default=False)
     automerge: bpy.props.BoolProperty(name="Enable Automerge", description="Enable Automerge Option", default=False)
     merge: bpy.props.FloatProperty(name="Automerge Dist", default=0.001, min=0.0, max=0.1,precision=3, step=.1)
 
